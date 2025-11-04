@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+
+  device1:
+    build: ./mensageria
+    container_name: device1
+    depends_on:
+      - rabbitmq
+    environment:
+      USERNAME: "device1"
+      TARGET: "device2"
+      AUTO: "false"
+      DEBUG: "true"
+      RABBITMQ_HOST: rabbitmq
+    volumes:
+      - ./mensageria:/app
+    tty: true
+    stdin_open: true
+    command: ["python", "device.py"]
+
+  device2:
+    build: ./mensageria
+    container_name: device2
+    depends_on:
+      - rabbitmq
+    environment:
+      USERNAME: "device2"
+      TARGET: "device1"
+      AUTO: "false"
+      DEBUG: "true"
+      RABBITMQ_HOST: rabbitmq
+    volumes:
+      - ./mensageria:/app
+    tty: true
+    stdin_open: true
+    command: ["python", "device.py"]
