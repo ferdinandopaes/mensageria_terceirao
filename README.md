@@ -1,105 +1,125 @@
-# Mensageria III Termo ADS - Estrutura de Dados + RabbitMQ
+# Guia Completo e Didático
 
-## 📌 1. Sobre o projeto
+## **Projeto: Sistema de Mensageria com Estruturas de Dados e RabbitMQ**
 
-Este projeto é uma atividade prática desenvolvida para aprender **estruturas de dados fundamentais** enquanto construímos um **sistema de mensageria** inspirado em um chat simples (tipo WhatsApp).
+Bem-vindo ao projeto mais divertido e prático que você vai fazer no curso.
+Aqui você vai aprender **estrutura de dados**, **mensageria**, **Docker**, **RabbitMQ** e **comunicação entre dispositivos**.
 
-Tudo é simulado **localmente**, mas usando elementos reais como:
-
-✅ **RabbitMQ** – fila real de mensagens
-✅ **Docker + Docker Compose** – ambiente containerizado
-✅ **Dois dispositivos** (device1 e device2) trocando mensagens
-✅ **Modo debug visual** mostrando as estruturas funcionando
+E tudo isso **construído do zero**, com suas próprias mãos, passo a passo.
+Mesmo que você nunca tenha trabalhado com esses conceitos antes, relaxa:
+este guia foi feito exatamente para você.
 
 ---
 
-## 🎯 2. Objetivo educacional
+# 📌 1. O que você vai construir
 
-A ideia é que o aluno aprenda, na prática:
+Você vai criar um pequeno “WhatsApp”.
+Mas bem simples.
 
-### ✅ Estruturas de dados implementadas do zero
+✅ Dois dispositivos (device1 e device2)
+✅ Eles enviam mensagens um para o outro
+✅ Usando um servidor de mensagens real (RabbitMQ)
+✅ Cada dispositivo mantém suas estruturas de dados internas:
 
-* **Fila (Queue)**
-* **Pilha (Stack)**
-* **Lista linear**
-* **Lista encadeada (Linked List)**
-* **Árvore (Tree)**
+* **Fila** (para mensagens a enviar)
+* **Pilha** (para desfazer ações)
+* **Lista Encadeada** (para histórico de mensagens)
+* **Lista Linear** (para organizar contatos)
+* **Árvore** (para organizar grupos e subgrupos)
 
-### ✅ Conceitos de mensageria
-
-* Produtor / consumidor
-* Enfileiramento
-* ACK
-* Mensagens pendentes vs entregues
-
-### ✅ Integração com software real
-
-* Como um sistema real usa estruturas de dados internamente
-* Como ferramentas como WhatsApp/Telegram funcionam por baixo dos panos
-* Funcionamento básico de um broker de mensagens (RabbitMQ)
+E tudo isso será **programado por você**, do zero.
+Nós só te damos a estrutura… o código é seu.
 
 ---
 
-## 🧱 3. Arquitetura
+# 🧩 2. Como funciona a comunicação do sistema
+
+Imagine assim:
+
+```
+device1  →  envia mensagem →  rabbitmq  →  recebe mensagem → device2
+device2  →  envia mensagem →  rabbitmq  →  recebe mensagem → device1
+```
+
+### ✅ Cada device tem:
+
+* Um **produtor** → envia mensagens para a fila do outro
+* Um **consumidor** → fica escutando sua própria fila
+* Suas **estruturas de dados internas**, que guardam tudo
+
+### ✅ RabbitMQ é o "correio"
+
+* Ele garante que a mensagem chega
+* Ele enfileira a mensagem
+* Ele controla mensagens pendentes / entregues
+
+Você poderá ver isso ao vivo no painel web do RabbitMQ.
+
+---
+
+# 🏗️ 3. Estrutura do projeto que você precisa criar
+
+O professor já te entrega essa estrutura vazia.
+Você deve preencher **TODOS os arquivos .py**.
+
+```
+mensageria/
+│
+├── device.py                 ← lógica principal do device
+├── debug_visual.py           ← prints bonitos (opcional)
+│
+├── estruturas/
+│   ├── fila.py               ← implementar do zero
+│   ├── pilha.py              ← implementar do zero
+│   ├── lista_linear.py       ← implementar do zero
+│   ├── lista_encadeada.py    ← implementar do zero
+│   └── arvore.py             ← implementar do zero
+│
+└── services/
+    ├── chat_service.py       ← integração das estruturas
+    └── persistencia.py       ← salvar histórico (opcional)
+```
+
+E na raiz do projeto:
 
 ```
 docker-compose.yml
-│
-├── rabbitmq          → fila de mensagens (broker)
-│
-└── mensageria/
-    ├── device.py     → código principal do dispositivo
-    ├── debug_visual.py
-    ├── estruturas/
-    │   ├── fila.py
-    │   ├── pilha.py
-    │   ├── lista_linear.py
-    │   ├── lista_encadeada.py
-    │   └── arvore.py
-    └── services/
-        ├── chat_service.py
-        └── persistencia.py
+Dockerfile
+README.md   ← (este arquivo)
 ```
 
 ---
 
-## 🚀 4. O fluxo do sistema
+# 🐋 4. Como instalar o Docker (passo a passo simples)
 
-Cada dispositivo executa:
-
-1. ✅ Um **produtor** → envia mensagens para o outro device
-
-2. ✅ Um **consumidor** → recebe mensagens enviadas ao seu nome
-
-3. ✅ Um conjunto de **estruturas internas**, todas implementadas manualmente:
-
-   * Fila local de mensagens enviadas
-   * Pilha de UNDO
-   * Lista encadeada de histórico
-   * Árvore (a ser implementada pelos alunos)
-   * Lista linear (para funcionalidades extras)
-
-4. ✅ Um **modo debug** — mostra:
-
-   * Quando a mensagem foi enfileirada
-   * Quando foi enviada
-   * Quando foi recebida
-   * Como está a fila local em tempo real
+Mesmo para quem nunca instalou.
 
 ---
 
-## 🧰 5. Como instalar o Docker
+## ✅ Windows (Docker Desktop)
 
-### 🔹 Windows
-
-1. Baixe o Docker Desktop:
-   [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
-2. Instale e reinicie o computador
-3. Abra o Docker Desktop e verifique se está rodando
+1. Acesse: [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
+2. Baixe o instalador
+3. Clique em “Next → Next → Install”
+4. Reinicie o computador
+5. Abra o Docker Desktop
+6. Verifique se aparece “**Docker is running**”
 
 ---
 
-### 🔹 Linux (Ubuntu/Debian)
+## ✅ macOS (Docker Desktop)
+
+1. Acesse: [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
+2. Baixe a versão para seu processador (Intel ou Apple Silicon)
+3. Arraste o ícone para a pasta Applications
+4. Abra o Docker Desktop
+5. Verifique se está rodando
+
+---
+
+## ✅ Linux (Ubuntu)
+
+Abra o terminal e execute:
 
 ```bash
 sudo apt update
@@ -111,151 +131,241 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
   https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
-  | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  | sudo tee /etc/apt/sources.list.d/docker.list
 
 sudo apt update
-
-sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 
-Adicionar o usuário ao grupo docker:
+Adicionar usuário no grupo docker (senão tem que usar “sudo” sempre):
 
 ```bash
 sudo usermod -aG docker $USER
 ```
 
-**Reinicie a máquina depois disso.**
+Depois reinicie o PC.
 
 ---
 
-### 🔹 macOS
+# ▶️ 5. Como rodar o ambiente
 
-✅ Recomendado: Docker Desktop
-[https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
-
-Após instalar, abra o aplicativo e certifique-se de que está rodando.
-
----
-
-## 🐋 6. Como rodar o ambiente (Docker Compose)
-
-1. Entre na pasta do projeto:
-
-```bash
-cd mensageria_full
-```
-
-2. Suba o ambiente:
+No terminal, dentro da pasta do projeto:
 
 ```bash
 docker compose up --build
 ```
 
-3. O sistema subirá:
+Pronto.
+Isso vai subir:
 
-* `rabbitmq` → broker
-* `device1` → primeiro dispositivo
-* `device2` → segundo dispositivo
-
-4. Acesse o painel do RabbitMQ:
-
-👉 **[http://localhost:15672](http://localhost:15672)**
-Usuário: `admin`
-Senha: `admin`
-
-Aqui os alunos conseguem visualizar:
-
-✅ Filas
-✅ Mensagens entrando e saindo
-✅ Mensagens pendentes
-✅ Mensagens entregues
-✅ Quantidade de mensagens por segundo
+✅ rabbitmq
+✅ device1
+✅ device2
 
 ---
 
-## 📱 7. Como usar os dispositivos (device1 e device2)
+# 🌐 6. Acessando o painel do RabbitMQ
 
-Quando os containers subirem, abra dois terminais:
+Abra no navegador:
 
-Para acompanhar o device1:
+👉 [http://localhost:15672](http://localhost:15672)
 
-```bash
-docker logs -f device1
-```
+Login:
 
-Para acompanhar o device2:
+* **Usuário:** admin
+* **Senha:** admin
 
-```bash
-docker logs -f device2
-```
+Aqui você vai ver:
 
-Ou abra um shell interativo:
+✅ filas (queues)
+✅ mensagens entrando
+✅ mensagens pendentes
+✅ mensagens entregues
+
+---
+
+# 📱 7. Como interagir com os devices
+
+Você pode abrir o terminal de cada device:
 
 ```bash
 docker exec -it device1 bash
 docker exec -it device2 bash
 ```
 
-Dentro do prompt, os comandos são:
+Ou acompanhar os logs ao vivo:
 
-| Comando   | Função                                  |
-| --------- | --------------------------------------- |
-| `<texto>` | envia mensagem para o outro dispositivo |
-| `/hist`   | mostra o histórico (lista encadeada)    |
-| `/fila`   | mostra fila local                       |
-| `/undo`   | desfaz última operação (pilha)          |
-| `/exit`   | sai                                     |
-| `/help`   | mostra ajuda                            |
+```bash
+docker logs -f device1
+docker logs -f device2
+```
 
 ---
 
-## 🧑‍💻 8. O que devem desenvolver
+# ⌨️ 8. Comandos dentro do dispositivo
 
-### ✅ Implementações completas:
-
-* Fila 
-* Pilha 
-* Lista encadeada 
-* Lista linear 
-* Árvore 
-
-### ✅ O que eles devem entender:
-
-* A diferença entre fila e fila do RabbitMQ
-* Como o chat simula a lógica interna
-* Como a pilha funciona com UNDO
-* Como o histórico se forma com lista encadeada
-
-### ✅ Podem evoluir implementando:
-
-* Busca por mensagens na lista encadeada
-* Organização dos contatos com árvore
-* Threads respondendo mensagens automaticamente
-* Persistência (armazenar conversas em JSON)
-* UI simples em linha de comando, etc.
+| Comando   | O que faz                          |
+| --------- | ---------------------------------- |
+| `<texto>` | envia mensagem                     |
+| `/hist`   | mostra histórico (lista encadeada) |
+| `/fila`   | mostra fila local                  |
+| `/undo`   | desfaz última ação (pilha)         |
+| `/exit`   | sai                                |
+| `/help`   | mostra ajuda                       |
 
 ---
 
-## 🧭 9. Sugestão de etapas para os alunos
+# 🧠 9. O que você (aluno) precisa desenvolver
 
-### 1
+Você deve implementar **TODAS as estruturas de dados**, usando **somente ponteiros, nós, e lógica manual**.
 
-→ Instalar Docker
-→ Subir o ambiente
-→ Entender a arquitetura
-→ Testar envio e recebimento
+Nada de `list.append`, `list.pop`, `deque`, nada disso.
 
-### 2
+### ✅ 1. Fila (queue)
 
+* `enfileirar`
+* `desenfileirar`
+* `remover`
+* `mostrar`
+
+### ✅ 2. Pilha (stack)
+
+* `empilhar`
+* `desempilhar`
+* `mostrar`
+
+### ✅ 3. Lista Encadeada
+
+* `adicionar`
+* `remover`
+* `procurar`
+* `mostrar`
+
+### ✅ 4. Lista Linear (array manual)
+
+* `adicionar`
+* `inserir`
+* `remover`
+* `buscar`
+* `mostrar`
+
+### ✅ 5. Árvore
+
+* `adicionar`
+* `buscar`
+* `mostrar`
+
+### ✅ 6. chat_service.py
+
+Aqui você faz:
+
+* enviar mensagem
+* receber mensagem
+* registrar no histórico
+* inserir na fila
+* empilhar no undo
+
+### ✅ 7. device.py
+
+Aqui você implementa:
+
+* interface do usuário
+* comandos (`/hist`, `/fila`, `/undo`)
+* envio de mensagens
+* consumo de mensagens
 
 ---
 
-## ✅ 10. Finalizando
+# ✅ 10. Checklist para o aluno (seguir na ordem)
 
-Esse projeto:
+**✅ 1. Instalar o Docker**
+**✅ 2. Rodar `docker compose up`**
+**✅ 3. Testar rabbitmq na porta 15672**
+**✅ 4. Entrar no device e testar digitar mensagens**
+**✅ 5. Implementar fila completa**
+**✅ 6. Implementar pilha completa**
+**✅ 7. Implementar lista encadeada**
+**✅ 8. Integrar no `chat_service.py`**
+**✅ 9. Implementar lista linear**
+**✅ 10. Implementar árvore**
+**✅ 11. Criar grupos de contatos**
+**✅ 12. Criar funções extras (opcional)**
 
-✅ Mostra estruturas de dados **na prática**, não só na teoria
-✅ Usa ferramenta real do mercado (RabbitMQ)
-✅ Permite visualização do fluxo real
-✅ Ajuda os alunos a construir raciocínio de arquitetura
-✅ Dá autonomia e abre portas para aprendizado avançado
+* salvar histórico
+* auto-resposta
+* broadcast
+* estatísticas da fila
+
+---
+
+# 🧪 11. Como testar se está funcionando
+
+### ✅ Teste 1: device1 envia para device2
+
+No terminal do `device1`:
+
+```
+Olá device2!
+```
+
+No terminal do `device2` deve aparecer:
+
+```
+📩 Recebido de device1: Olá device2!
+```
+
+### ✅ Teste 2: fila local funciona
+
+```
+/fila
+```
+
+### ✅ Teste 3: histórico funciona
+
+```
+/hist
+```
+
+### ✅ Teste 4: desfazer funciona
+
+```
+/undo
+```
+
+---
+
+# 🧯 12. Problemas comuns e soluções
+
+### ✅ “docker: command not found”
+
+→ Docker não instalado corretamente.
+→ Releia a seção de instalação da sua plataforma.
+
+### ✅ RabbitMQ não sobe
+
+Rode:
+
+```bash
+docker compose down
+docker compose up --build
+```
+
+### ✅ device1 não recebe mensagens
+
+Verifique no RabbitMQ se a fila **device1** existe.
+
+---
+
+# ✅ 13. Final
+
+Esse projeto vai te ensinar:
+
+✅ Estruturas de dados
+✅ Programação Python real
+✅ Conceitos modernos de mensageria
+✅ Trabalho em equipe
+✅ Como sistemas reais funcionam
+
+Divirta-se construindo.
+Pergunte sempre.
+E lembre-se: **errar faz parte do aprendizado**.
